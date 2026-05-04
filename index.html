@@ -41,7 +41,7 @@
         h1 {
             font-size: 2.5rem;
             color: #333;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         /* Estilos comunes para los botones grandes táctiles */
@@ -72,6 +72,27 @@
             background-color: #333;
             color: white;
         }
+
+        /* Estilos para la lista de pasos en la pantalla de detalle */
+        .lista-pasos {
+            text-align: left;
+            margin: 2rem auto;
+            /* Ancho adaptable para la lista */
+            width: 90%;
+            max-width: 600px;
+            /* Quitamos los puntos de la lista por defecto */
+            list-style: none;
+        }
+
+        /* Estilos para cada paso de la lista */
+        .lista-pasos li {
+            background-color: white;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-left: 4px solid #333;
+            font-size: 1.2rem;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -79,45 +100,108 @@
     <div id="pantalla-inicio" class="contenedor">
         <h1>¿En qué te ayudamos?</h1>
         
-        <!-- Botones de trámites: al hacer clic navegan a la pantalla de detalle -->
-        <button class="boton-tramite">TNE</button>
-        <button class="boton-tramite">Subsidio de agua</button>
-        <button class="boton-tramite">Registro Social de Hogares</button>
+        <!-- Botones de trámites con atributo data-id para identificarlos -->
+        <button class="boton-tramite" data-id="tne">TNE</button>
+        <button class="boton-tramite" data-id="agua">Subsidio de agua</button>
+        <button class="boton-tramite" data-id="rsh">Registro Social de Hogares</button>
     </div>
 
     <!-- Pantalla de Detalle: oculta por defecto (display: none) -->
     <div id="pantalla-detalle" class="contenedor" style="display: none;">
-        <!-- Título que muestra el nombre del trámite seleccionado -->
+        <!-- Título que muestra el nombre completo del trámite seleccionado -->
         <h1 id="titulo-tramite"></h1>
+        <!-- Lista donde mostraremos los pasos del trámite -->
+        <ul id="lista-pasos" class="lista-pasos"></ul>
         <!-- Botón para volver a la pantalla inicial -->
         <button class="boton-tramite" id="btn-volver">Volver</button>
     </div>
 
     <script>
+        // --- Datos de los trámites (array de objetos) ---
+        // Cada objeto tiene: id, nombre completo y array de pasos
+        const tramites = [
+            {
+                id: "tne",
+                nombre: "TNE (Tarjeta Nacional Estudiantil)",
+                pasos: [
+                    "Estar matriculado en una institución educacional.",
+                    "Solicitar la TNE en tu institución o en el sistema correspondiente.",
+                    "Tomarte la foto (en tu institución o punto habilitado).",
+                    "Pagar el costo de la tarjeta (si corresponde).",
+                    "Esperar la notificación de disponibilidad.",
+                    "Retirar la TNE en el punto indicado."
+                ]
+            },
+            {
+                id: "agua",
+                nombre: "Subsidio al pago de agua",
+                pasos: [
+                    "Verificar que tu hogar esté inscrito en el Registro Social de Hogares (RSH).",
+                    "Asegurarte de estar al día con el pago del agua.",
+                    "Reunir tu boleta de agua más reciente.",
+                    "Ir a la municipalidad correspondiente a tu domicilio.",
+                    "Solicitar la postulación al subsidio de agua.",
+                    "Esperar la evaluación del municipio y el resultado."
+                ]
+            },
+            {
+                id: "rsh",
+                nombre: "Registro Social de Hogares (RSH)",
+                pasos: [
+                    "Ingresar al sitio web del Registro Social de Hogares o acudir a la municipalidad.",
+                    "Iniciar sesión con tu Clave Única.",
+                    "Completar tus datos personales y del hogar.",
+                    "Ingresar información de ingresos, vivienda y grupo familiar.",
+                    "Enviar la solicitud.",
+                    "Esperar la evaluación y clasificación socioeconómica."
+                ]
+            }
+        ];
+
         // Esperamos a que todo el HTML esté cargado antes de ejecutar el código
         document.addEventListener('DOMContentLoaded', function() {
             // --- Obtenemos referencias a los elementos del DOM ---
-            // Pantalla inicial (con botones de trámites)
             const pantallaInicio = document.getElementById('pantalla-inicio');
-            // Pantalla de detalle (muestra el trámite seleccionado)
             const pantallaDetalle = document.getElementById('pantalla-detalle');
-            // Elemento donde mostraremos el nombre del trámite
             const tituloTramite = document.getElementById('titulo-tramite');
-            // Botón de volver a la pantalla inicial
+            const listaPasos = document.getElementById('lista-pasos');
             const btnVolver = document.getElementById('btn-volver');
             // Seleccionamos todos los botones de trámite (excluimos el de volver)
             const botonesTramite = document.querySelectorAll('.boton-tramite:not(#btn-volver)');
 
             // --- Funciones de navegación ---
-            
-            // Función para mostrar la pantalla de detalle de un trámite
-            function mostrarDetalle(nombreTramite) {
-                // Ocultamos la pantalla inicial
-                pantallaInicio.style.display = 'none';
-                // Mostramos la pantalla de detalle
-                pantallaDetalle.style.display = 'block';
-                // Ponemos el nombre del trámite en el título
-                tituloTramite.textContent = nombreTramite;
+
+            // Función para mostrar la pantalla de detalle con los pasos
+            function mostrarDetalle(idTramite) {
+                // Buscamos el trámite en el array usando el id (data-id del botón)
+                // find() recorre el array y devuelve el primer elemento que cumpla la condición
+                const tramiteSeleccionado = tramites.find(function(t) {
+                    return t.id === idTramite;
+                });
+
+                // Si encontramos el trámite
+                if (tramiteSeleccionado) {
+                    // Ocultamos la pantalla inicial
+                    pantallaInicio.style.display = 'none';
+                    // Mostramos la pantalla de detalle
+                    pantallaDetalle.style.display = 'block';
+
+                    // Ponemos el nombre completo del trámite en el título
+                    tituloTramite.textContent = tramiteSeleccionado.nombre;
+
+                    // Limpiamos la lista de pasos anterior (por si veníamos de otro trámite)
+                    listaPasos.innerHTML = '';
+
+                    // Recorremos el array de pasos del trámite seleccionado
+                    tramiteSeleccionado.pasos.forEach(function(paso) {
+                        // Creamos un nuevo elemento <li>
+                        const li = document.createElement('li');
+                        // Le ponemos el texto del paso
+                        li.textContent = paso;
+                        // Lo agregamos a la lista <ul>
+                        listaPasos.appendChild(li);
+                    });
+                }
             }
 
             // Función para volver a la pantalla inicial
@@ -129,14 +213,14 @@
             }
 
             // --- Asignamos eventos a los botones ---
-            
+
             // Recorremos cada botón de trámite y les agregamos un evento clic
             botonesTramite.forEach(function(boton) {
                 boton.addEventListener('click', function() {
-                    // Obtenemos el texto del botón (nombre del trámite)
-                    const nombreTramiteSeleccionado = this.textContent;
+                    // Obtenemos el data-id del botón clickeado
+                    const idSeleccionado = this.getAttribute('data-id');
                     // Llamamos a la función para mostrar el detalle
-                    mostrarDetalle(nombreTramiteSeleccionado);
+                    mostrarDetalle(idSeleccionado);
                 });
             });
 

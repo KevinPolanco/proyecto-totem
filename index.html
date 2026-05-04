@@ -30,14 +30,14 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Contenedor principal del contenido */
+        /* Contenedor principal del contenido (usado para ambas pantallas) */
         .contenedor {
             text-align: center;
             padding: 2rem;
             width: 100%;
         }
 
-        /* Título principal de la pantalla inicial */
+        /* Título principal de las pantallas */
         h1 {
             font-size: 2.5rem;
             color: #333;
@@ -64,7 +64,7 @@
             cursor: pointer;
             /* Bloque para que cada botón esté en su propia línea */
             display: block;
-            border-radius: 10px; /* bordes redondeados */
+            border-radius: 10px;
         }
 
         /* Efecto al pasar el mouse (opcional, simple, no afecta táctil) */
@@ -75,15 +75,74 @@
     </style>
 </head>
 <body>
-    <!-- Contenedor principal de la pantalla inicial -->
-    <div class="contenedor">
-        <!-- Título requerido -->
+    <!-- Pantalla Inicial: se muestra por defecto -->
+    <div id="pantalla-inicio" class="contenedor">
         <h1>¿En qué te ayudamos?</h1>
         
-        <!-- Botones de trámites (sin funcionalidad aún, solo estructura visual) -->
+        <!-- Botones de trámites: al hacer clic navegan a la pantalla de detalle -->
         <button class="boton-tramite">TNE</button>
         <button class="boton-tramite">Subsidio de agua</button>
         <button class="boton-tramite">Registro Social de Hogares</button>
     </div>
+
+    <!-- Pantalla de Detalle: oculta por defecto (display: none) -->
+    <div id="pantalla-detalle" class="contenedor" style="display: none;">
+        <!-- Título que muestra el nombre del trámite seleccionado -->
+        <h1 id="titulo-tramite"></h1>
+        <!-- Botón para volver a la pantalla inicial -->
+        <button class="boton-tramite" id="btn-volver">Volver</button>
+    </div>
+
+    <script>
+        // Esperamos a que todo el HTML esté cargado antes de ejecutar el código
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Obtenemos referencias a los elementos del DOM ---
+            // Pantalla inicial (con botones de trámites)
+            const pantallaInicio = document.getElementById('pantalla-inicio');
+            // Pantalla de detalle (muestra el trámite seleccionado)
+            const pantallaDetalle = document.getElementById('pantalla-detalle');
+            // Elemento donde mostraremos el nombre del trámite
+            const tituloTramite = document.getElementById('titulo-tramite');
+            // Botón de volver a la pantalla inicial
+            const btnVolver = document.getElementById('btn-volver');
+            // Seleccionamos todos los botones de trámite (excluimos el de volver)
+            const botonesTramite = document.querySelectorAll('.boton-tramite:not(#btn-volver)');
+
+            // --- Funciones de navegación ---
+            
+            // Función para mostrar la pantalla de detalle de un trámite
+            function mostrarDetalle(nombreTramite) {
+                // Ocultamos la pantalla inicial
+                pantallaInicio.style.display = 'none';
+                // Mostramos la pantalla de detalle
+                pantallaDetalle.style.display = 'block';
+                // Ponemos el nombre del trámite en el título
+                tituloTramite.textContent = nombreTramite;
+            }
+
+            // Función para volver a la pantalla inicial
+            function volverInicio() {
+                // Ocultamos la pantalla de detalle
+                pantallaDetalle.style.display = 'none';
+                // Mostramos la pantalla inicial
+                pantallaInicio.style.display = 'block';
+            }
+
+            // --- Asignamos eventos a los botones ---
+            
+            // Recorremos cada botón de trámite y les agregamos un evento clic
+            botonesTramite.forEach(function(boton) {
+                boton.addEventListener('click', function() {
+                    // Obtenemos el texto del botón (nombre del trámite)
+                    const nombreTramiteSeleccionado = this.textContent;
+                    // Llamamos a la función para mostrar el detalle
+                    mostrarDetalle(nombreTramiteSeleccionado);
+                });
+            });
+
+            // Agregamos evento clic al botón de volver
+            btnVolver.addEventListener('click', volverInicio);
+        });
+    </script>
 </body>
 </html>

@@ -120,7 +120,36 @@
             background-color: var(--color-fondo-lista);
             padding: 1.5rem;
             margin: 1rem 0;
-            border-left: 5px solid var(--color-primario);
+            font-size: 1.3rem;
+            color: var(--color-texto);
+            /* Usamos flex para alinear el número y el texto horizontalmente */
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Círculo grande con el número del paso */
+        .paso-numero {
+            /* Tamaño para que quepa "Paso 1" */
+            width: 120px;
+            height: 60px;
+            min-width: 120px;
+            /* Azul institucional de fondo */
+            background-color: var(--color-primario);
+            color: white;
+            /* Número grande y centrado */
+            font-size: 1.3rem;
+            font-weight: bold;
+            /* Flexbox interno para centrar el texto dentro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Bordes redondeados estilo píldora */
+            border-radius: 30px;
+        }
+
+        /* Texto del paso */
+        .paso-texto {
             font-size: 1.3rem;
             color: var(--color-texto);
         }
@@ -224,11 +253,26 @@
                     listaPasos.innerHTML = '';
 
                     // Recorremos el array de pasos del trámite seleccionado
-                    tramiteSeleccionado.pasos.forEach(function(paso) {
+                    // forEach recibe el texto del paso (paso) y su posición (indice)
+                    tramiteSeleccionado.pasos.forEach(function(paso, indice) {
                         // Creamos un nuevo elemento <li>
                         const li = document.createElement('li');
-                        // Le ponemos el texto del paso
-                        li.textContent = paso;
+
+                        // Creamos un <span> para el número grande del paso
+                        const numSpan = document.createElement('span');
+                        numSpan.className = 'paso-numero';
+                        // indice empieza en 0, sumamos 1 para mostrar "Paso 1", "Paso 2"...
+                        numSpan.textContent = 'Paso ' + (indice + 1);
+
+                        // Creamos un <span> para el texto del paso
+                        const textSpan = document.createElement('span');
+                        textSpan.className = 'paso-texto';
+                        textSpan.textContent = paso;
+
+                        // Agregamos ambos spans dentro del <li>
+                        li.appendChild(numSpan);
+                        li.appendChild(textSpan);
+
                         // Lo agregamos a la lista <ul>
                         listaPasos.appendChild(li);
                     });

@@ -10,7 +10,11 @@
     --color-texto: #1F2937;
     --color-fondo: #FFFFFF;
     --color-fondo-lista: #F3F4F6;
+    --escala: 1;
 }
+
+.fuente-large  { --escala: 1.25; }
+.fuente-xlarge { --escala: 1.5; }
 
 /* Reset básico */
 * {
@@ -35,16 +39,26 @@ body {
     width: 100%;
 }
 
+.app-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 h1 {
-    font-size: 2.5rem;
+    font-size: calc(2.5rem * var(--escala));
     color: var(--color-texto);
-    margin-bottom: 3rem;
+    margin-bottom: calc(3rem * var(--escala));
 }
 
 .boton-tramite {
-    padding: 2rem 3rem;
-    font-size: 1.8rem;
-    margin: 1.5rem auto;
+    padding: calc(2rem * var(--escala)) calc(3rem * var(--escala));
+    font-size: calc(1.8rem * var(--escala));
+    margin: calc(1.5rem * var(--escala)) auto;
     width: 90%;
     max-width: 500px;
     background-color: var(--color-primario);
@@ -63,9 +77,9 @@ h1 {
 }
 
 .boton-volver {
-    padding: 1.5rem 3rem;
-    font-size: 1.5rem;
-    margin: 3rem auto;
+    padding: calc(1.5rem * var(--escala)) calc(3rem * var(--escala));
+    font-size: calc(1.5rem * var(--escala));
+    margin: calc(3rem * var(--escala)) auto;
     width: 90%;
     max-width: 500px;
     background-color: var(--color-secundario);
@@ -84,7 +98,7 @@ h1 {
 
 .lista-pasos {
     text-align: left;
-    margin: 3rem auto;
+    margin: calc(3rem * var(--escala)) auto;
     width: 90%;
     max-width: 600px;
     list-style: none;
@@ -92,30 +106,75 @@ h1 {
 
 .lista-pasos li {
     background-color: var(--color-fondo-lista);
-    padding: 1.5rem;
-    margin: 1rem 0;
-    font-size: 1.3rem;
+    padding: calc(1.5rem * var(--escala));
+    margin: calc(1rem * var(--escala)) 0;
+    font-size: calc(1.3rem * var(--escala));
     color: var(--color-texto);
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: calc(1.5rem * var(--escala));
 }
 
 .paso-numero {
-    width: 120px;
-    height: 60px;
-    min-width: 120px;
+    width: calc(120px * var(--escala));
+    height: calc(60px * var(--escala));
+    min-width: calc(120px * var(--escala));
     background-color: var(--color-primario);
     color: white;
-    font-size: 1.3rem;
+    font-size: calc(1.3rem * var(--escala));
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 30px;
+    border-radius: calc(30px * var(--escala));
 }
 
 .paso-texto {
-    font-size: 1.3rem;
+    font-size: calc(1.3rem * var(--escala));
     color: var(--color-texto);
+}
+
+.control-fuente {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 100;
+}
+
+.control-fuente button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--color-primario);
+    background: white;
+    color: var(--color-primario);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-fuente button:hover {
+    background: var(--color-primario);
+    color: white;
+}
+
+@media (max-width: 767px) {
+    .control-fuente {
+        display: none;
+    }
+
+    .lista-pasos li {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .contenedor {
+        padding: 1.5rem;
+    }
 }

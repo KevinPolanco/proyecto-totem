@@ -1,0 +1,121 @@
+/* ===========================================
+   VARIABLES CSS - Para cambiar colores fácilmente
+   Solo modificar los valores aquí abajo
+=========================================== */
+:root {
+    --color-primario: #2F80ED;
+    --color-primario-hover: #1D4ED8;
+    --color-secundario: #DC2626;
+    --color-secundario-hover: #B91C1C;
+    --color-texto: #1F2937;
+    --color-fondo: #FFFFFF;
+    --color-fondo-lista: #F3F4F6;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--color-fondo);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.contenedor {
+    text-align: center;
+    padding: 3rem;
+    width: 100%;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--color-texto);
+    margin-bottom: 3rem;
+}
+
+.boton-tramite {
+    padding: 2rem 3rem;
+    font-size: 1.8rem;
+    margin: 1.5rem auto;
+    width: 90%;
+    max-width: 500px;
+    background-color: var(--color-primario);
+    color: white;
+    border: 2px solid var(--color-primario);
+    outline: none;
+    cursor: pointer;
+    display: block;
+    border-radius: 8px;
+    font-weight: normal;
+}
+
+.boton-tramite:hover {
+    background-color: var(--color-primario-hover);
+    border-color: var(--color-primario-hover);
+}
+
+.boton-volver {
+    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    margin: 3rem auto;
+    width: 90%;
+    max-width: 500px;
+    background-color: var(--color-secundario);
+    color: white;
+    border: 2px solid var(--color-secundario);
+    outline: none;
+    cursor: pointer;
+    display: block;
+    border-radius: 8px;
+}
+
+.boton-volver:hover {
+    background-color: var(--color-secundario-hover);
+    border-color: var(--color-secundario-hover);
+}
+
+.lista-pasos {
+    text-align: left;
+    margin: 3rem auto;
+    width: 90%;
+    max-width: 600px;
+    list-style: none;
+}
+
+.lista-pasos li {
+    background-color: var(--color-fondo-lista);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    font-size: 1.3rem;
+    color: var(--color-texto);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.paso-numero {
+    width: 120px;
+    height: 60px;
+    min-width: 120px;
+    background-color: var(--color-primario);
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+}
+
+.paso-texto {
+    font-size: 1.3rem;
+    color: var(--color-texto);
+}

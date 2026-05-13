@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración de caracteres para acentos y eñes -->
+    <meta charset="UTF-8">
+    <!-- Meta viewport: clave para simular tablet, asegura que ocupe todo el ancho de pantalla -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tótem Digital - Inicio</title>
+    
+    <style>
+        /* ===========================================
+           VARIABLES CSS - Para cambiar colores fácilmente
+           Solo modificar los valores aquí abajo
+        =========================================== */
+        :root {
+            /* Colores principales */
+            --color-primario: #2F80ED;
+            --color-primario-hover: #1D4ED8;
+
+            /* Color secundario (botón volver) */
+            --color-secundario: #DC2626;
+            --color-secundario-hover: #B91C1C;
+
+            /* Color de texto principal */
+            --color-texto: #1F2937;
+
+            /* Colores de fondo */
+            --color-fondo: #FFFFFF;
+            --color-fondo-lista: #F3F4F6;
+        }
+
+        /* Reset básico: eliminamos márgenes/padding por defecto del navegador */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos del body: ocupa todo el alto y ancho de la ventana */
+        body {
+            min-height: 100vh;
+            width: 100%;
+            background-color: var(--color-fondo);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        /* Contenedor principal del contenido */
+        .contenedor {
+            text-align: center;
+            padding: 3rem;
+            width: 100%;
+        }
+
+        /* Título principal de las pantallas */
+        h1 {
+            font-size: 2.5rem;
+            color: var(--color-texto);
+            margin-bottom: 3rem;
+        }
+
+        /* Estilos para botones de trámites (azul institucional) */
+        .boton-tramite {
+            padding: 2rem 3rem;
+            font-size: 1.8rem;
+            margin: 1.5rem auto;
+            width: 90%;
+            max-width: 500px;
+            background-color: var(--color-primario);
+            color: white;
+            border: 2px solid var(--color-primario);
+            outline: none;
+            cursor: pointer;
+            display: block;
+            border-radius: 8px;
+            font-weight: normal;
+        }
+
+        /* Efecto al pasar el mouse: azul más oscuro */
+        .boton-tramite:hover {
+            background-color: var(--color-primario-hover);
+            border-color: var(--color-primario-hover);
+        }
+
+        /* Estilos para botón "Volver" (rojo institucional) */
+        .boton-volver {
+            padding: 1.5rem 3rem;
+            font-size: 1.5rem;
+            margin: 3rem auto;
+            width: 90%;
+            max-width: 500px;
+            background-color: var(--color-secundario);
+            color: white;
+            border: 2px solid var(--color-secundario);
+            outline: none;
+            cursor: pointer;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Efecto hover para botón volver */
+        .boton-volver:hover {
+            background-color: var(--color-secundario-hover);
+            border-color: var(--color-secundario-hover);
+        }
+
+        /* Estilos para la lista de pasos */
+        .lista-pasos {
+            text-align: left;
+            margin: 3rem auto;
+            width: 90%;
+            max-width: 600px;
+            list-style: none;
+        }
+
+        /* Estilos para cada paso de la lista */
+        .lista-pasos li {
+            background-color: var(--color-fondo-lista);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-size: 1.3rem;
+            color: var(--color-texto);
+            /* Usamos flex para alinear el número y el texto horizontalmente */
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Círculo grande con el número del paso */
+        .paso-numero {
+            /* Tamaño para que quepa "Paso 1" */
+            width: 120px;
+            height: 60px;
+            min-width: 120px;
+            /* Azul institucional de fondo */
+            background-color: var(--color-primario);
+            color: white;
+            /* Número grande y centrado */
+            font-size: 1.3rem;
+            font-weight: bold;
+            /* Flexbox interno para centrar el texto dentro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Bordes redondeados estilo píldora */
+            border-radius: 30px;
+        }
+
+        /* Texto del paso */
+        .paso-texto {
+            font-size: 1.3rem;
+            color: var(--color-texto);
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla Inicial: se muestra por defecto -->
+    <div id="pantalla-inicio" class="contenedor">
+        <h1>¿En qué te ayudamos?</h1>
+        
+        <!-- Botones de trámites con atributo data-id para identificarlos -->
+        <button class="boton-tramite" data-id="tne">TNE</button>
+        <button class="boton-tramite" data-id="agua">Subsidio de agua</button>
+        <button class="boton-tramite" data-id="rsh">Registro Social de Hogares</button>
+    </div>
+
+    <!-- Pantalla de Detalle: oculta por defecto (display: none) -->
+    <div id="pantalla-detalle" class="contenedor" style="display: none;">
+        <!-- Título que muestra el nombre completo del trámite seleccionado -->
+        <h1 id="titulo-tramite"></h1>
+        <!-- Lista donde mostraremos los pasos del trámite -->
+        <ul id="lista-pasos" class="lista-pasos"></ul>
+        <!-- Botón para volver a la pantalla inicial -->
+        <button class="boton-volver" id="btn-volver">Volver</button>
+    </div>
+
+    <script>
+        // --- Datos de los trámites (array de objetos) ---
+        // Cada objeto tiene: id, nombre completo y array de pasos
+        const tramites = [
+            {
+                id: "tne",
+                nombre: "TNE (Tarjeta Nacional Estudiantil)",
+                pasos: [
+                    "Estar matriculado en una institución educacional.",
+                    "Solicitar la TNE en tu institución o en el sistema correspondiente.",
+                    "Tomarte la foto (en tu institución o punto habilitado).",
+                    "Pagar el costo de la tarjeta (si corresponde).",
+                    "Esperar la notificación de disponibilidad.",
+                    "Retirar la TNE en el punto indicado."
+                ]
+            },
+            {
+                id: "agua",
+                nombre: "Subsidio al pago de agua",
+                pasos: [
+                    "Verificar que tu hogar esté inscrito en el Registro Social de Hogares (RSH).",
+                    "Asegurarte de estar al día con el pago del agua.",
+                    "Reunir tu boleta de agua más reciente.",
+                    "Ir a la municipalidad correspondiente a tu domicilio.",
+                    "Solicitar la postulación al subsidio de agua.",
+                    "Esperar la evaluación del municipio y el resultado."
+                ]
+            },
+            {
+                id: "rsh",
+                nombre: "Registro Social de Hogares (RSH)",
+                pasos: [
+                    "Ingresar al sitio web del Registro Social de Hogares o acudir a la municipalidad.",
+                    "Iniciar sesión con tu Clave Única.",
+                    "Completar tus datos personales y del hogar.",
+                    "Ingresar información de ingresos, vivienda y grupo familiar.",
+                    "Enviar la solicitud.",
+                    "Esperar la evaluación y clasificación socioeconómica."
+                ]
+            }
+        ];
+
+        // Esperamos a que todo el HTML esté cargado antes de ejecutar el código
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Obtenemos referencias a los elementos del DOM ---
+            const pantallaInicio = document.getElementById('pantalla-inicio');
+            const pantallaDetalle = document.getElementById('pantalla-detalle');
+            const tituloTramite = document.getElementById('titulo-tramite');
+            const listaPasos = document.getElementById('lista-pasos');
+            const btnVolver = document.getElementById('btn-volver');
+            // Seleccionamos todos los botones de trámite (excluimos el de volver)
+            const botonesTramite = document.querySelectorAll('.boton-tramite:not(#btn-volver)');
+
+            // --- Funciones de navegación ---
+
+            // Función para mostrar la pantalla de detalle con los pasos
+            function mostrarDetalle(idTramite) {
+                // Buscamos el trámite en el array usando el id (data-id del botón)
+                // find() recorre el array y devuelve el primer elemento que cumpla la condición
+                const tramiteSeleccionado = tramites.find(function(t) {
+                    return t.id === idTramite;
+                });
+
+                // Si encontramos el trámite
+                if (tramiteSeleccionado) {
+                    // Ocultamos la pantalla inicial
+                    pantallaInicio.style.display = 'none';
+                    // Mostramos la pantalla de detalle
+                    pantallaDetalle.style.display = 'block';
+
+                    // Ponemos el nombre completo del trámite en el título
+                    tituloTramite.textContent = tramiteSeleccionado.nombre;
+
+                    // Limpiamos la lista de pasos anterior (por si veníamos de otro trámite)
+                    listaPasos.innerHTML = '';
+
+                    // Recorremos el array de pasos del trámite seleccionado
+                    // forEach recibe el texto del paso (paso) y su posición (indice)
+                    tramiteSeleccionado.pasos.forEach(function(paso, indice) {
+                        // Creamos un nuevo elemento <li>
+                        const li = document.createElement('li');
+
+                        // Creamos un <span> para el número grande del paso
+                        const numSpan = document.createElement('span');
+                        numSpan.className = 'paso-numero';
+                        // indice empieza en 0, sumamos 1 para mostrar "Paso 1", "Paso 2"...
+                        numSpan.textContent = 'Paso ' + (indice + 1);
+
+                        // Creamos un <span> para el texto del paso
+                        const textSpan = document.createElement('span');
+                        textSpan.className = 'paso-texto';
+                        textSpan.textContent = paso;
+
+                        // Agregamos ambos spans dentro del <li>
+                        li.appendChild(numSpan);
+                        li.appendChild(textSpan);
+
+                        // Lo agregamos a la lista <ul>
+                        listaPasos.appendChild(li);
+                    });
+                }
+            }
+
+            // Función para volver a la pantalla inicial
+            function volverInicio() {
+                // Ocultamos la pantalla de detalle
+                pantallaDetalle.style.display = 'none';
+                // Mostramos la pantalla inicial
+                pantallaInicio.style.display = 'block';
+            }
+
+            // --- Asignamos eventos a los botones ---
+
+            // Recorremos cada botón de trámite y les agregamos un evento clic
+            botonesTramite.forEach(function(boton) {
+                boton.addEventListener('click', function() {
+                    // Obtenemos el data-id del botón clickeado
+                    const idSeleccionado = this.getAttribute('data-id');
+                    // Llamamos a la función para mostrar el detalle
+                    mostrarDetalle(idSeleccionado);
+                });
+            });
+
+            // Agregamos evento clic al botón de volver
+            btnVolver.addEventListener('click', volverInicio);
+        });
+    </script>
+</body>
+</html>

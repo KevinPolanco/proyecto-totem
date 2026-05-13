@@ -80,10 +80,17 @@ h1 {
     border: 2px solid var(--color-primario);
     outline: none;
     cursor: pointer;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
     border-radius: 8px;
     font-weight: normal;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.boton-icono {
+    font-size: calc(2rem * var(--escala));
 }
 
 .boton-tramite:hover {
@@ -140,8 +147,19 @@ h1 {
     list-style: none;
 }
 
+@keyframes paso-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .lista-pasos li {
-    background-color: var(--color-fondo-lista);
+    background-color: white;
     padding: calc(1.5rem * var(--escala));
     margin: calc(1rem * var(--escala)) 0;
     font-size: calc(1.3rem * var(--escala));

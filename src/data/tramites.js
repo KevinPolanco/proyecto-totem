@@ -2,6 +2,7 @@ export const tramites = [
   {
     id: "tne",
     nombre: "TNE (Tarjeta Nacional Estudiantil)",
+    icono: "🎓",
     pasos: [
       "Estar matriculado en una institución educacional.",
       "Solicitar la TNE en tu institución o en el sistema correspondiente.",
@@ -14,6 +15,7 @@ export const tramites = [
   {
     id: "agua",
     nombre: "Subsidio al pago de agua",
+    icono: "💧",
     pasos: [
       "Verificar que tu hogar esté inscrito en el Registro Social de Hogares (RSH).",
       "Asegurarte de estar al día con el pago del agua.",
@@ -26,6 +28,7 @@ export const tramites = [
   {
     id: "rsh",
     nombre: "Registro Social de Hogares (RSH)",
+    icono: "🏠",
     pasos: [
       "Ingresar al sitio web del Registro Social de Hogares o acudir a la municipalidad.",
       "Iniciar sesión con tu Clave Única.",

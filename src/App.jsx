@@ -1,7 +1,7 @@
 import { useNavegacion } from './hooks/useNavegacion'
 import { tramites } from './data/tramites'
 import InicioPantalla from './components/InicioPantalla'
-import PasoLista from './components/PasoLista'
+import DetallePantalla from './components/DetallePantalla'
 import './App.css'
 
 function App() {
@@ -9,13 +9,7 @@ function App() {
 
   // Si hay un trámite seleccionado, mostrar pantalla de detalle
   if (tramiteSeleccionado && tramite) {
-    return (
-      <div className="contenedor">
-        <h1>{tramite.nombre}</h1>
-        <PasoLista pasos={tramite.pasos} />
-        <button className="boton-volver" onClick={volverInicio}>Volver</button>
-      </div>
-    )
+    return <DetallePantalla tramite={tramite} onVolver={volverInicio} />
   }
 
   return <InicioPantalla tramites={tramites} onSeleccionar={mostrarDetalle} />

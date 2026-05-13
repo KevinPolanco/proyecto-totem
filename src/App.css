@@ -91,6 +91,11 @@ h1 {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+.boton-tramite:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
 .boton-tramite:focus-visible {
     outline: 3px solid var(--color-texto);
     outline-offset: 3px;
@@ -115,6 +120,11 @@ h1 {
 .boton-volver:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.boton-volver:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .boton-volver:focus-visible {
@@ -190,6 +200,11 @@ h1 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.control-fuente button:active {
+    transform: scale(0.93);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
 .control-fuente button:focus-visible {
     outline: 3px solid var(--color-texto);
     outline-offset: 3px;
@@ -218,6 +233,11 @@ h1 {
 .boton-voz:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.boton-voz:active {
+    transform: scale(0.93);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .boton-voz:focus-visible {

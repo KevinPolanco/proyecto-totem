@@ -1,6 +1,7 @@
 import { useNavegacion } from './hooks/useNavegacion'
 import { tramites } from './data/tramites'
-import BotonTramite from './components/BotonTramite'
+import InicioPantalla from './components/InicioPantalla'
+import PasoLista from './components/PasoLista'
 import './App.css'
 
 function App() {
@@ -11,28 +12,13 @@ function App() {
     return (
       <div className="contenedor">
         <h1>{tramite.nombre}</h1>
-        <ul className="lista-pasos">
-          {tramite.pasos.map((paso, index) => (
-            <li key={index}>
-              <span className="paso-numero">Paso {index + 1}</span>
-              <span className="paso-texto">{paso}</span>
-            </li>
-          ))}
-        </ul>
+        <PasoLista pasos={tramite.pasos} />
         <button className="boton-volver" onClick={volverInicio}>Volver</button>
       </div>
     )
   }
 
-  // Sino, mostrar pantalla inicial
-  return (
-    <div className="contenedor">
-      <h1>¿En qué te ayudamos?</h1>
-      {tramites.map(t => (
-        <BotonTramite key={t.id} nombre={t.nombre} onClick={() => mostrarDetalle(t.id)} />
-      ))}
-    </div>
-  )
+  return <InicioPantalla tramites={tramites} onSeleccionar={mostrarDetalle} />
 }
 
 export default App

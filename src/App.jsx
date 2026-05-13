@@ -12,12 +12,15 @@ function App() {
 
   return (
     <div className="app-wrapper">
+      <a href="#contenido-principal" className="skip-link">Saltar al contenido principal</a>
       <FontSizeControl onAumentar={aumentar} onDisminuir={disminuir} onReset={reset} />
-      {tramiteSeleccionado && tramite ? (
-        <DetallePantalla tramite={tramite} onVolver={volverInicio} claseFuente={claseFuente} />
-      ) : (
-        <InicioPantalla tramites={tramites} onSeleccionar={mostrarDetalle} claseFuente={claseFuente} />
-      )}
+      <main id="contenido-principal" role="main" aria-label="Contenido principal">
+        {tramiteSeleccionado && tramite ? (
+          <DetallePantalla tramite={tramite} onVolver={volverInicio} claseFuente={claseFuente} />
+        ) : (
+          <InicioPantalla tramites={tramites} onSeleccionar={mostrarDetalle} claseFuente={claseFuente} />
+        )}
+      </main>
     </div>
   )
 }

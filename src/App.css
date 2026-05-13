@@ -3,10 +3,8 @@
    Solo modificar los valores aquí abajo
 =========================================== */
 :root {
-    --color-primario: #2F80ED;
-    --color-primario-hover: #1D4ED8;
-    --color-secundario: #DC2626;
-    --color-secundario-hover: #B91C1C;
+    --color-primario: #1D4ED8;
+    --color-secundario: #B91C1C;
     --color-texto: #1F2937;
     --color-fondo: #FFFFFF;
     --color-fondo-lista: #F3F4F6;
@@ -49,6 +47,22 @@ body {
     align-items: center;
 }
 
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: var(--color-texto);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    z-index: 200;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
 h1 {
     font-size: calc(2.5rem * var(--escala));
     color: var(--color-texto);
@@ -69,11 +83,17 @@ h1 {
     display: block;
     border-radius: 8px;
     font-weight: normal;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .boton-tramite:hover {
-    background-color: var(--color-primario-hover);
-    border-color: var(--color-primario-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.boton-tramite:focus-visible {
+    outline: 3px solid var(--color-texto);
+    outline-offset: 3px;
 }
 
 .boton-volver {
@@ -89,11 +109,17 @@ h1 {
     cursor: pointer;
     display: block;
     border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .boton-volver:hover {
-    background-color: var(--color-secundario-hover);
-    border-color: var(--color-secundario-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.boton-volver:focus-visible {
+    outline: 3px solid var(--color-texto);
+    outline-offset: 3px;
 }
 
 .lista-pasos {
@@ -156,11 +182,17 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .control-fuente button:hover {
-    background: var(--color-primario);
-    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.control-fuente button:focus-visible {
+    outline: 3px solid var(--color-texto);
+    outline-offset: 3px;
 }
 
 @media (max-width: 767px) {

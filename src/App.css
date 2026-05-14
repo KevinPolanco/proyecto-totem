@@ -178,10 +178,10 @@ h1 {
     width: calc(120px * var(--escala));
     height: calc(60px * var(--escala));
     min-width: calc(120px * var(--escala));
-    background-color: var(--color-primario);
-    color: white;
+    background-color: #EFF6FF;
+    color: var(--color-primario);
     font-size: calc(1.3rem * var(--escala));
-    font-weight: bold;
+    font-weight: 600;
     display: flex;
     justify-content: center;
     align-items: center;
